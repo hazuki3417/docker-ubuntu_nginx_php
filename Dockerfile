@@ -77,17 +77,10 @@ COPY config/php/www.conf ${php_install_path}/pool.d/
 COPY config/php/index.php ${document_root}/
 COPY config/php/xdebug.conf /etc/php/7.2/fpm/conf.d/20-xdebug.ini
 
-# サービス起動用のシェルスクリプト作成
-RUN : "コンテナ起動時に起動するサービスを設定する" && { \
-	echo '#!/bin/bash'; \
-	echo 'nginx -c '${conf_path}; \
-	echo 'php-fpm7.2 -c /etc/php/7.2/fpm/php-fpm.conf'; \
-	echo '/bin/bash'; \
-	} | tee /startup.sh
-RUN chmod 744 /startup.sh
+COPY docker-entrypoint.sh /entrypoint.sh
+RUN chmod 744 /entrypoint.sh
 
-WORKDIR /
-CMD [ "/startup.sh" ]
+ENTRYPOINT [ "/entrypoint.sh" ]
 
 # 指定したディレクトリをマウント
 VOLUME ${document_root}
