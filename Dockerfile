@@ -77,6 +77,24 @@ COPY config/php/www.conf ${php_install_path}/pool.d/
 COPY config/php/index.php ${document_root}/
 COPY config/php/xdebug.conf /etc/php/7.2/fpm/conf.d/20-xdebug.ini
 
+RUN : "Nginxの設定" && \
+	echo "nginx setting start..." && \
+	mkdir ${nginx_install_path}/modules-available && \
+	mkdir ${nginx_install_path}/modules-enabled && \
+	mkdir ${nginx_install_path}/sites-available && \
+	mkdir ${nginx_install_path}/sites-enabled
+COPY config/nginx/nginx.conf /etc/nginx/
+COPY config/nginx/sites/default_http.conf /etc/nginx/sites-available/
+COPY config/nginx/sites/default_https.conf /etc/nginx/sites-available/
+COPY config/nginx/sites/default_virtualhost.conf /etc/nginx/sites-available/
+
+WORKDIR /etc/nginx/sites-enabled
+RUN : "サイトの設定ファイルを読み込む" && \
+	ln -sf ../sites-available/default_http.conf ./defautl_http.conf
+
+
+WORKDIR /
+
 COPY docker-entrypoint.sh /entrypoint.sh
 RUN chmod 744 /entrypoint.sh
 
