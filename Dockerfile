@@ -10,7 +10,7 @@
 # docker exec -it nginx_v1.16.0_php7.2 /bin/bash
 
 # ベースイメージを指定
-FROM hazuki3417/nginx:latest
+FROM hazuki3417/ubuntu_nginx:latest
 # 制作者情報を指定
 LABEL maintainer="hazuki3417 <hazuki3417@gmail.com>"
 

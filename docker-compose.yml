@@ -1,13 +1,13 @@
 version: "3.0"
 
 services:
-  nginx_php:
+  ubuntu_nginx_php:
     build: #buildしたときのimage名はimageに指定した名前になる
       context: ./
       dockerfile: Dockerfile
-    hostname: nginx_php
-    image: hazuki3417/nginx_php:latest
-    container_name: nginx_php
+    hostname: ubuntu_nginx_php
+    image: hazuki3417/ubuntu_nginx_php:latest
+    container_name: ubuntu_nginx_php
     environment:
       TZ: Asia/Tokyo
     ports:
